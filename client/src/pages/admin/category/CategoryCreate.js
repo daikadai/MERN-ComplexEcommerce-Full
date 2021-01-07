@@ -9,6 +9,7 @@ import {
 } from "../../../functions/category";
 import { Link } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CategoryCreate = () => {
   const [name, setName] = useState("");
@@ -32,7 +33,7 @@ const CategoryCreate = () => {
         setLoading(false);
         setName("");
         toast.success(`"${res.data.name}" is created`);
-        loadCategories()
+        loadCategories();
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -42,41 +43,22 @@ const CategoryCreate = () => {
   };
 
   const handleRemove = async (slug) => {
-    if(window.confirm('Delete?')) {
-      setLoading(true)
+    if (window.confirm("Delete?")) {
+      setLoading(true);
       removeCategory(slug, user.token)
-      .then(res => {
-        setLoading(false)
-        toast.error(`${res.data.name} deleted`)
-        loadCategories()
-      })
-      .catch(err => {
-        if (err.response.status === 400) {
+        .then((res) => {
           setLoading(false);
-          toast.error(err.response.data);
-        }
-      })
+          toast.error(`${res.data.name} deleted`);
+          loadCategories();
+        })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            setLoading(false);
+            toast.error(err.response.data);
+          }
+        });
     }
-
-  }
-
-  const categoryForm = () => (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>Name</label>
-        <input
-          type="text"
-          className="form-control"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          autoFocus
-          required
-        />
-        <br />
-        <button className="btn btn-outline-primary">Save</button>
-      </div>
-    </form>
-  );
+  };
 
   return (
     <div className="container-fluid">
@@ -90,7 +72,11 @@ const CategoryCreate = () => {
           ) : (
             <h4>Create category</h4>
           )}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
           <hr />
           {categories.map((c) => (
             <div key={c._id} className="alert alert-secondary">

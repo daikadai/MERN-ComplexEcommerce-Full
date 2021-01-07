@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import AdminNav from "../../../components/nav/AdminNav";
 import { useSelector } from "react-redux";
-import {
-  getCategory,
-  updateCategory
-} from "../../../functions/category";
+import { getCategory, updateCategory } from "../../../functions/category";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CategoryUpdate = ({ history, match }) => {
   const [name, setName] = useState("");
@@ -18,17 +16,17 @@ const CategoryUpdate = ({ history, match }) => {
   }, []);
 
   const loadCategory = () =>
-  getCategory(match.params.slug).then((c) => setName(c.data.name));
+    getCategory(match.params.slug).then((c) => setName(c.data.name));
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    updateCategory(match.params.slug,{ name }, user.token)
+    updateCategory(match.params.slug, { name }, user.token)
       .then((res) => {
         setLoading(false);
         setName("");
         toast.success(`"${res.data.name}" is updated`);
-        history.push('/admin/category')
+        history.push("/admin/category");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -36,24 +34,6 @@ const CategoryUpdate = ({ history, match }) => {
         if (err.response.status === 400) toast.error(err.response.data);
       });
   };
-
-  const categoryForm = () => (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>Name</label>
-        <input
-          type="text"
-          className="form-control"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          autoFocus
-          required
-        />
-        <br />
-        <button className="btn btn-outline-primary">Save</button>
-      </div>
-    </form>
-  );
 
   return (
     <div className="container-fluid">
@@ -67,7 +47,11 @@ const CategoryUpdate = ({ history, match }) => {
           ) : (
             <h4>Update category</h4>
           )}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
           <hr />
         </div>
       </div>
