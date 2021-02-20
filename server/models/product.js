@@ -27,24 +27,24 @@ const productSchema = new mongoose.Schema({
     trim: true,
     maxlength: 32,
   },
-  category: {
-    type: ObjectId,
-    ref: "Category",
-  },
-  subs: [
-    {
-      type: ObjectId,
-      ref: "Sub",
-    },
-  ],
+  // category: {
+  //   type: ObjectId,
+  //   ref: "Category",
+  // },
+  // subs: [
+  //   {
+  //     type: ObjectId,
+  //     ref: "Sub",
+  //   },
+  // ],
   quantity: Number,
   sold: {
     type: Number,
     default: 0
   },
-  images: {
-    type: Array
-  },
+  // images: {
+  //   type: Array
+  // },
   shipping: {
     type: String,
     enum: ['Yes', 'No']
@@ -68,4 +68,4 @@ const productSchema = new mongoose.Schema({
   // ]
 }, { timestamps: true });
 
-module.export = mongoose.model('Product', productSchema)
+module.exports = mongoose.model('Product', productSchema)

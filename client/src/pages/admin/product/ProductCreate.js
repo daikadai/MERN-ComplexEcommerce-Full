@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import AdminNav from "../../../components/nav/AdminNav";
+import { createProduct } from "../../../functions/product";
 
 const initialState = {
   title: "",
@@ -20,8 +21,9 @@ const initialState = {
 };
 
 const ProductCreate = () => {
-  const [values, setValue] = useState(initialState);
+  const [values, setValues] = useState(initialState);
 
+  const { user } = useSelector(state => ({...state}))
   const {
     title,
     description,
@@ -40,10 +42,18 @@ const ProductCreate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    createProduct(values, user.token)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err.response);
+        if (err.response.status === 400) toast.error(err.response.data);
+      })
   };
 
   const handleChange = (e) => {
-
+    setValues({...values, [e.target.name]: e.target.value})
   }
 
   return (
