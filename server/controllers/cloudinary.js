@@ -14,7 +14,7 @@ exports.upload = async (req,res) => {
   })
   res.json({
     public_id: result.public_id,
-    url: result.secure.url
+    url: result.secure_url
   })
 }
 
