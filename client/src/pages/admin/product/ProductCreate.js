@@ -6,6 +6,7 @@ import { createProduct } from "../../../functions/product";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 
+
 const initialState = {
   title: "Macbook Pro",
   description: "This is the best Apple product",
@@ -78,13 +79,15 @@ const ProductCreate = () => {
           <h4>Product create</h4>
           <hr />
 
+          {JSON.stringify(values.subs)}
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            setValues={setValues}
             values={values}
             handleCategoryChange={handleCategoryChange}
             subOptions = {subOptions}
-            showSub = { showSub }
+            showSub = {showSub}
           />
         </div>
       </div>
