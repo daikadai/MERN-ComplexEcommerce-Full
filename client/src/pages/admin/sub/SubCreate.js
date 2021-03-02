@@ -82,8 +82,8 @@ const SubCreate = () => {
             <h4>Create sub category</h4>
           )}
 
-          <form className="group">
-            <label>Category</label>
+          <div className="form-group">
+            <label>Parent Category</label>
             <select
               name="category"
               className="form-control"
@@ -97,7 +97,7 @@ const SubCreate = () => {
                   </option>
                 ))}
             </select>
-          </form>
+          </div>
 
           <CategoryForm
             handleSubmit={handleSubmit}

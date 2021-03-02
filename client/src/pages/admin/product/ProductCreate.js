@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import AdminNav from "../../../components/nav/AdminNav";
 import { createProduct } from "../../../functions/product";
+import { getCategories, getCategory } from "../../../functions/category";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 
 const initialState = {
@@ -24,26 +25,33 @@ const initialState = {
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
 
-  const { user } = useSelector(state => ({...state}))
+  const { user } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () =>
+    getCategories().then((c) => setValues({ ...values, categories: c.data }));
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    console.log(values);
     createProduct(values, user.token)
-      .then(res => {
-        console.log(res);
-        window.alert(`"${res.data.title}" is created`)
-        window.location.reload()
+      .then((res) => {
+        window.alert(`"${res.data.title}" is created`);
+        window.location.reload();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err.response);
         // if (err.response.status === 400) toast.error(err.response.data);
-        toast.error(err.response.data.err)
-      })
+        toast.error(err.response.data.err);
+      });
   };
 
   const handleChange = (e) => {
-    setValues({...values, [e.target.name]: e.target.value})
-  }
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="container-fluid">
@@ -56,7 +64,7 @@ const ProductCreate = () => {
           <h4>Product create</h4>
           <hr />
 
-          <ProductCreateForm 
+          <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             values={values}
