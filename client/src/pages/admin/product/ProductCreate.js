@@ -6,7 +6,7 @@ import { createProduct } from "../../../functions/product";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import FileUpload from "../../../components/forms/FileUpload";
-
+import { LoadingOutlined } from "@ant-design/icons";
 
 const initialState = {
   title: "Macbook Pro",
@@ -17,7 +17,23 @@ const initialState = {
   subs: [],
   shipping: "Yes",
   quantity: "50",
-  images: [],
+  images: [
+    // {
+    //   public_id: "vmqidqbr0rdf3imxhmhj",
+    //   url:
+    //     "https://res.cloudinary.com/duohrnpuy/image/upload/v1614697176/vmqidqbr0rdf3imxhmhj.jpg",
+    // },
+    // {
+    //   public_id: "bu3quxfq586lhe1hthns",
+    //   url:
+    //     "https://res.cloudinary.com/duohrnpuy/image/upload/v1614697176/bu3quxfq586lhe1hthns.jpg",
+    // },
+    // {
+    //   public_id: "ljjqvmytlqhs6okijqwq",
+    //   url:
+    //     "https://res.cloudinary.com/duohrnpuy/image/upload/v1614697176/ljjqvmytlqhs6okijqwq.jpg",
+    // },
+  ],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
   brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
   color: "White",
@@ -26,9 +42,9 @@ const initialState = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
-  const [subOptions, setSubOptions] = useState([])
-  const [showSub, setShowSub] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state }));
 
@@ -58,18 +74,17 @@ const ProductCreate = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleCategoryChange = e => {
-    e.preventDefault()
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
 
-    console.log('clicked category', e.target.value);
+    console.log("clicked category", e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
-    getCategorySubs(e.target.value)
-      .then(res => {
-        console.log('sub options on category clicked', res);
-        setSubOptions(res.data)
-      })
-    setShowSub(true)
-  }
+    getCategorySubs(e.target.value).then((res) => {
+      console.log("sub options on category clicked", res);
+      setSubOptions(res.data);
+    });
+    setShowSub(true);
+  };
 
   return (
     <div className="container-fluid">
@@ -79,13 +94,13 @@ const ProductCreate = () => {
         </div>
 
         <div className="col-md-10">
-          <h4>Product create</h4>
+          {loading ? <LoadingOutlined className='text-danger h1'/> : <h4>Product create</h4>}
           <hr />
 
           {JSON.stringify(values.images)}
 
           <div className="p-3">
-            <FileUpload 
+            <FileUpload
               values={values}
               setValues={setValues}
               setLoading={setLoading}
@@ -97,8 +112,8 @@ const ProductCreate = () => {
             setValues={setValues}
             values={values}
             handleCategoryChange={handleCategoryChange}
-            subOptions = {subOptions}
-            showSub = {showSub}
+            subOptions={subOptions}
+            showSub={showSub}
           />
         </div>
       </div>
