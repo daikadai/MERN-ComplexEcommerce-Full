@@ -60,12 +60,13 @@ const ProductCreate = () => {
     e.preventDefault()
 
     console.log('clicked category', e.target.value);
-    setValues({ ...values, category: e.target.value });
+    setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value)
       .then(res => {
         console.log('sub options on category clicked', res);
         setSubOptions(res.data)
       })
+    setShowSub(true)
   }
 
   return (
