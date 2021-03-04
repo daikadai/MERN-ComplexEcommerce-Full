@@ -32,10 +32,19 @@ exports.remove = async (req, res) => {
     const deleted = await Product.findOneAndRemove({
       slug: req.params.slug,
     }).exec();
-    
+
     res.json(deleted);
   } catch (error) {
     console.log(error);
     return res.status(400).send("Product delete failed");
   }
+};
+
+exports.read = async (req, res) => {
+  const product = await Product.find({ slug: req.params.slug})
+  .populate('category')
+  .populate('subs')
+  .exec()
+
+  res.json(product)
 };
