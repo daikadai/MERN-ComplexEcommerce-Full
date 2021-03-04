@@ -1,28 +1,41 @@
-const Product = require('../models/product')
-const slugify = require('slugify')
+const Product = require("../models/product");
+const slugify = require("slugify");
 
-exports.create = async (req,res) => {
+exports.create = async (req, res) => {
   try {
     console.log(req.body);
-    req.body.slug = slugify(req.body.title)
-    const newProduct = await new Product(req.body).save()
-    res.json(newProduct)
+    req.body.slug = slugify(req.body.title);
+    const newProduct = await new Product(req.body).save();
+    res.json(newProduct);
   } catch (error) {
     console.log(error);
     // res.status(400).send('Create product failed')
     res.status(400).json({
-      err: error.message
-    }) 
+      err: error.message,
+    });
   }
-}
+};
 
-exports.listAll = async (req,res) => {
+exports.listAll = async (req, res) => {
   let products = await Product.find({})
-  .limit(parseInt(req.params.count))
-  .populate('category')
-  .populate('subs')
-  .sort([['createAt','desc']])
-  .exec()
+    .limit(parseInt(req.params.count))
+    .populate("category")
+    .populate("subs")
+    .sort([["createAt", "desc"]])
+    .exec();
 
-  res.json(products)
-}
+  res.json(products);
+};
+
+exports.remove = async (req, res) => {
+  try {
+    const deleted = await Product.findOneAndRemove({
+      slug: req.params.slug,
+    }).exec();
+    
+    res.json(deleted);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send("Product delete failed");
+  }
+};
