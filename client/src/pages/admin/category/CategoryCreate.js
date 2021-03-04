@@ -55,8 +55,8 @@ const CategoryCreate = () => {
           loadCategories();
         })
         .catch((err) => {
+          setLoading(false);
           if (err.response.status === 400) {
-            setLoading(false);
             toast.error(err.response.data);
           }
         });

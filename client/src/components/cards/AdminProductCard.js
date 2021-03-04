@@ -1,11 +1,11 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import React from "react";
-import laptop from '../../images/laptop.png'
+import laptop from "../../images/laptop.png";
 
 const { Meta } = Card;
-const AdminProductCard = ({ product }) => {
-  const { title, description, images } = product;
+const AdminProductCard = ({ product, handleRemove }) => {
+  const { title, description, images, slug } = product;
 
   return (
     <Card
@@ -17,11 +17,17 @@ const AdminProductCard = ({ product }) => {
         />
       }
       actions={[
-        <EditOutlined className='text-warning'/>,
-        <DeleteOutlined className='text-danger'/>
+        <EditOutlined className="text-warning" />,
+        <DeleteOutlined
+          className="text-danger"
+          onClick={() => handleRemove(slug)}
+        />,
       ]}
     >
-      <Meta title={title} description={`${description && description.substring(0, 40)}...`} />
+      <Meta
+        title={title}
+        description={`${description && description.substring(0, 40)}...`}
+      />
     </Card>
   );
 };
