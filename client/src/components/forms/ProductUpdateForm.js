@@ -5,14 +5,16 @@ const { Option } = Select;
 const ProductUpdateForm = ({
   handleSubmit,
   handleChange,
+  handleCategoryChange,
+  subOptions,
   setValues,
+  categories,
   values,
 }) => {
   const {
     title,
     description,
     price,
-    categories,
     category,
     subs,
     shipping,
@@ -63,7 +65,7 @@ const ProductUpdateForm = ({
         <label>Shipping</label>
         <select
           name="shipping"
-          value={shipping === 'Yes' ? 'Yes' : 'No'}
+          value={shipping === "Yes" ? "Yes" : "No"}
           className="form-control"
           onChange={handleChange}
         >
@@ -85,7 +87,12 @@ const ProductUpdateForm = ({
 
       <div className="form-group">
         <label>Color</label>
-        <select value={color} name="color" className="form-control" onChange={handleChange}>
+        <select
+          value={color}
+          name="color"
+          className="form-control"
+          onChange={handleChange}
+        >
           {colors.map((c) => (
             <option key={c} value={c}>
               {c}
@@ -96,7 +103,12 @@ const ProductUpdateForm = ({
 
       <div className="form-group">
         <label>Brand</label>
-        <select value={brand}  name="brand" className="form-control" onChange={handleChange}>
+        <select
+          value={brand}
+          name="brand"
+          className="form-control"
+          onChange={handleChange}
+        >
           {brands.map((b) => (
             <option key={b} value={b}>
               {b}
@@ -105,6 +117,22 @@ const ProductUpdateForm = ({
         </select>
       </div>
 
+      <div className="form-group">
+        <label>Category</label>
+        <select
+          name="category"
+          className="form-control"
+          onChange={handleCategoryChange}
+        >
+          <option>{category ? category.name : "Please Select"}</option>
+          {categories.length > 0 &&
+            categories.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+        </select>
+      </div>
       <br />
       <button className="btn btn-outline-info">Save</button>
     </form>

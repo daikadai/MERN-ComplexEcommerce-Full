@@ -13,7 +13,6 @@ const initialState = {
   title: "",
   description: "",
   price: "",
-  categories: [],
   category: "",
   subs: [],
   shipping: "",
@@ -28,12 +27,15 @@ const initialState = {
 const ProductUpdate = ({ match }) => {
   //state
   const [values, setValues] = useState(initialState);
-  const { user } = useSelector((state) => ({ ...state }));
+  const [categories, setCategories] = useState([])
+  const [subOptions, setSubOptions] = useState([]);
 
+  const { user } = useSelector((state) => ({ ...state }));
   const { slug } = match.params
 
   useEffect(() => {
    loadProduct()
+   loadCategories()
   }, [])
 
   const loadProduct = () => {
@@ -42,6 +44,20 @@ const ProductUpdate = ({ match }) => {
       setValues({...values, ...p.data})
     })
   }
+
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
+
+    console.log("clicked category", e.target.value);
+    setValues({ ...values, subs: [], category: e.target.value });
+    getCategorySubs(e.target.value).then((res) => {
+      console.log("sub options on category clicked", res);
+      setSubOptions(res.data);
+    });
+  };
+
+  const loadCategories = () =>
+  getCategories().then((c) => setCategories(c.data));
 
   const handleSubmit = (e) => { 
     e.preventDefault();
@@ -65,6 +81,9 @@ const ProductUpdate = ({ match }) => {
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             setValues={setValues}
+            handleCategoryChange={handleCategoryChange}
+            subOptions={subOptions}
+            categories={categories}
             values={values}
           />
         </div>
