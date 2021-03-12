@@ -10,7 +10,7 @@ const { create, listAll, remove, read, update, list, productsCount } = require("
 
 // routes
 router.post("/product", authCheck, adminCheck, create);
-router.get('/products/total', productsCount)
+router.get('/product/total', productsCount)
 router.get("/products/:count", listAll);
 router.delete("/products/:slug", authCheck, adminCheck, remove);
 router.get("/product/:slug", read);
