@@ -1,5 +1,6 @@
 import React from "react";
 import Jumbotron from "../components/cards/Jumbotron";
+import BestSeller from "../components/home/BestSeller";
 import NewArrivals from "../components/home/NewArrivals";
 
 const Home = () => {
@@ -16,6 +17,11 @@ const Home = () => {
 
       <NewArrivals />
 
+      <h4 className="text-center p-3 mt-5 mb-5 display-3 jumbotron">
+        Best Seller
+      </h4>
+
+      <BestSeller />
       <br/>
       <br/>
     </>
