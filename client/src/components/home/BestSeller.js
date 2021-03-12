@@ -6,7 +6,7 @@ import ProductCard from '../cards/ProductCard';
 const BestSeller = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     loadAllProducts();
   }, []);
