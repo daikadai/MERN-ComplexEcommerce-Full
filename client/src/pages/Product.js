@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import SingleProduct from '../components/cards/SingleProduct'
 import { getProduct } from '../functions/product'
 
 const Product = ({ match }) => {
@@ -14,8 +15,13 @@ const Product = ({ match }) => {
     getProduct(slug).then(res => setProduct(res.data))
   }
   return (
-    <div>
-      {JSON.stringify(product)}
+    <div className='container-fluid'>
+      <div className="row pt-4">
+        <SingleProduct product={product} />
+      </div>
+      <div className="row">
+        <div>Related products</div>
+      </div>
     </div>
   )
 }
