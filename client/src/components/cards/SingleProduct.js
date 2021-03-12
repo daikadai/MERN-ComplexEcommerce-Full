@@ -5,12 +5,12 @@ import { Carousel } from "react-responsive-carousel";
 import React from "react";
 import { Link } from "react-router-dom";
 import laptop from "../../images/laptop.png";
+import { Tabs } from "antd";
 import ProductListItems from "./ProductListItems";
 
-const { Meta } = Card;
-
+const { TabPane } = Tabs
 const SingleProduct = ({ product }) => {
-  const { title,images } = product;
+  const { title,images, description } = product;
   return (
     <>
       <div className="col-md-7">
@@ -28,6 +28,14 @@ const SingleProduct = ({ product }) => {
             }
           ></Card>
         )}
+        <Tabs type='card'>
+          <TabPane tab='Description' key="1">
+            {description && description}
+          </TabPane>
+          <TabPane tab='More' key="2">
+            Call us on xxxx xxx xx to learn more about this product
+          </TabPane>
+        </Tabs>
       </div>
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
