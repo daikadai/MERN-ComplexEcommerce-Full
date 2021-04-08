@@ -6,12 +6,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import laptop from "../../images/laptop.png";
 import { Tabs } from "antd";
-import StarRating from 'react-star-ratings'
+import StarRating from "react-star-ratings";
 import ProductListItems from "./ProductListItems";
+import RatingModal from "../modal/RatingModal";
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 const SingleProduct = ({ product }) => {
-  const { title,images, description, _id } = product;
+  const { title, images, description, _id } = product;
   return (
     <>
       <div className="col-md-7">
@@ -20,34 +21,19 @@ const SingleProduct = ({ product }) => {
             {images && images.map((i) => <img src={i.url} key={i.public_id} />)}
           </Carousel>
         ) : (
-          <Card
-            cover={
-              <img
-                src={laptop}
-                className="mb-3 card-image"
-              />
-            }
-          ></Card>
+          <Card cover={<img src={laptop} className="mb-3 card-image" />}></Card>
         )}
-        <Tabs type='card'>
-          <TabPane tab='Description' key="1">
+        <Tabs type="card">
+          <TabPane tab="Description" key="1">
             {description && description}
           </TabPane>
-          <TabPane tab='More' key="2">
+          <TabPane tab="More" key="2">
             Call us on xxxx xxx xx to learn more about this product
           </TabPane>
         </Tabs>
       </div>
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
-        <StarRating 
-          name={_id}
-          numberOfStars={5}
-          rating={2}
-          changeRating={(newRating, name) => console.log('newRating', newRating, 'name', name)}
-          isSelectable={true}
-          starRatedColor='red'
-        />
         <Card
           actions={[
             <>
@@ -58,9 +44,21 @@ const SingleProduct = ({ product }) => {
               <HeartOutlined className="text-info" />
               <br /> Add to Wishlist
             </Link>,
+            <RatingModal>
+              <StarRating
+                name={_id}
+                numberOfStars={5}
+                rating={2}
+                changeRating={(newRating, name) =>
+                  console.log("newRating", newRating, "name", name)
+                }
+                isSelectable={true}
+                starRatedColor="red"
+              />
+            </RatingModal>,
           ]}
         >
-          <ProductListItems product={product}/>
+          <ProductListItems product={product} />
         </Card>
       </div>
     </>
