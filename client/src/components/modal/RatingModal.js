@@ -2,7 +2,7 @@ import { StarOutlined } from "@ant-design/icons";
 import Modal from "antd/lib/modal/Modal";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { toast } from 'react-toastify'
 
 const RatingModal = ({ children }) => {
@@ -10,12 +10,16 @@ const RatingModal = ({ children }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   let history = useHistory()
+  let { slug } = useParams()
 
   const handleModal = () => {
     if(user && user.token) {
       setModalVisible(true)
     } else {
-      history.push('/login')
+      history.push({
+        pathname: "/login",
+        state: { from: `/product/${slug}`}
+      })
     }
   }
 
