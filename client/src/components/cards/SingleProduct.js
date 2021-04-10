@@ -9,6 +9,7 @@ import { Tabs } from "antd";
 import StarRating from "react-star-ratings";
 import ProductListItems from "./ProductListItems";
 import RatingModal from "../modal/RatingModal";
+import { showAvarage } from '../../functions/rating'
 
 const { TabPane } = Tabs;
 const SingleProduct = ({ product, onStarClick, star }) => {
@@ -34,6 +35,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       </div>
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
+        {product && product.ratings && product.ratings.length > 0 ? showAvarage(product) : 'No rating yet'}
         <Card
           actions={[
             <>
