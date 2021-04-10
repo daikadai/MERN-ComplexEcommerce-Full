@@ -6,22 +6,23 @@ export const showAvarage = p => {
     let ratingsArray = p && p.ratings
     let total = []
     let length = ratingsArray.length
-    console.log('length', length);
+    // console.log('length', length);
 
     ratingsArray.map(r => total.push(r.star))
     let totalReduce = total.reduce((p,n) => p + n, 0)
-    console.log('totalReduce', totalReduce);
+    // console.log('totalReduce', totalReduce);
 
     let highest = length * 5
-    console.log('highest', highest);
+    // console.log('highest', highest);
 
     let result = (totalReduce * 5) / highest
-    console.log('result', result);
+    // console.log('result', result);
 
     return (
       <div className="text-center pt-1 pb-3">
         <span>
-          <StarRating rating={result}/>
+          <StarRating rating={result} starDimension="20px" starSpacing="2px" starRatedColor='red' editing={false}/>
+          ({length})
         </span>
       </div>
     )
